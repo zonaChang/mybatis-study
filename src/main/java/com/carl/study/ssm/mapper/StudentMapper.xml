@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carl.study.ssm.mapper.StudentMapper">
+
+    <resultMap type="Student" id="pckStudent">
+        <id property="id" column="id"/>
+        <result property="bak" column="abc" />
+    </resultMap>
+    
+	<select id="queryAllOrderBy" resultMap="pckStudent">
+		select * from t_student order by ${value}
+	</select>
+	
+	<select id="qryStudentById" parameterType="long" resultType="Student">
+		select * from t_student where id = #{value}
+	</select>
+	
+	<!-- 
+	       使用 foreach遍历传入ids
+            collection：指定输入 对象中集合属性
+            item：每个遍历生成对象中
+            open：开始遍历时拼接的串
+            close：结束遍历时拼接的串
+            separator：遍历的两个对象中需要拼接的串
+	 -->
+	<select id="queryStudentByIds" parameterType="long" resultType="Student">
+		select * from t_student where id in
+		<foreach collection="list" item="idx" open="(" close=")" separator=", ">
+		  #{idx}
+		</foreach>
+	</select>
+	
+	<select id="qryStudentByLikeName" parameterType="string" resultType="Student">
+		select * from t_student where  name like "%${name}%"
+	</select>
+	
+	<select id="qryStudentByLikeNameFunc" parameterType="string" resultType="Student">
+		select * from t_student t where locate(#{value}, t.name)
+	</select>
+	
+	<insert id="addStudent" parameterType="Student" useGeneratedKeys="true">
+	   <selectKey keyProperty="id" order="AFTER" resultType="long">
+	       SELECT LAST_INSERT_ID()
+	   </selectKey>
+	   insert into t_student values (default, #{name}, #{sex}, #{description})
+	</insert>
+	
+	<update id="modifyStudent" >
+	<!-- arg0 param1 -->
+	   update t_student t set t.name=#{param1} where t.id=#{param2}
+	</update>
+	<delete id="deleteStudentById" parameterType="long" >
+	<!-- mysqldelete语句不能使用别名 -->
+	   delete from t_student where id=#{id}
+	</delete>
+</mapper>

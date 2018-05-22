@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.carl.study.ssm.mapper.ClassesMapper">
+
+    <resultMap type="Classes" id="qryStudentByClassesMap" >
+        <id property="id" column="id"/>
+        <collection property="studentSet" select="qryStudentByClassesId"  ofType="Student" column="id">
+            <id property="id" column="id"/>
+            <result property="classesId" column="classes_id"/>
+        </collection>
+    </resultMap>
+    
+    <resultMap type="classes"  id="one2more">
+        <id property="id" column="id"/>
+        <collection property="studentSet" column="" select="qryStudentByClassesId" ></collection>
+    </resultMap>
+    <!-- resultMap end -->
+    
+    <select id="qryStudentByClassesId" parameterType="long" resultType="Student">
+        select t.id, t.name, t.description, t.classes_id classedId, t.sex, t.abc bak from t_student
+        where t.id = #{id}
+    </select>
+    
+    <!-- other statment end -->
+    <select id="qryAllClasses" resultType="Classes">
+        select * from t_classes t
+    </select>
+    
+    <select id="qryClassesById" parameterType="long" resultType="Classes">
+        select * from t_classes t where t.id = #{id}
+    </select>
+    
+    <select id="qryClassesAndStuById" parameterType="long" resultMap="qryStudentByClassesMap">
+        select * from t_classes t where t.id=#{id}
+    </select>
+    
+    <select id="qryClasses" parameterType="Long" resultType="Classes">
+        select * from t_classes t 
+    </select>
+    
+    
+
+    
+    <select id="qryClassesOne2more" parameterType="long" resultMap="one2more">
+        select * from t_classes t where t.id = #{id}
+    </select>
+    
+</mapper>
