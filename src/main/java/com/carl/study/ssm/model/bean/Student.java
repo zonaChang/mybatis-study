@@ -1,5 +1,9 @@
 package com.carl.study.ssm.model.bean;
 
+import org.apache.ibatis.type.Alias;
+
+import com.carl.study.ssm.model.enums.SexEnum;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,6 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//@Alias("Student") //使用注解定义了别名， 则sqlMapConf.xml中配置的别名， 将失效
 public class Student {
 	private Long id;
 	
@@ -22,7 +27,7 @@ public class Student {
 	private String description;
 	
 	/** 0:女; 1:男 */
-	private int sex;
+	private SexEnum sex;
 	
 	private String bak;
 	

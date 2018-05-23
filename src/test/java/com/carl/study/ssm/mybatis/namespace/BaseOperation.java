@@ -64,8 +64,8 @@ public class BaseOperation {
 	@Test
 	public void addStudent() {
 		
-		Student student = new Student(null, "zona-2", 2, "zona_add_test", 1, "test", 1L);
-		
+//		Student student = new Student(null, "zona-2", 2, "zona_add_test", 1, "test", 1L);
+		Student student = null;
 		int count = sqlSession.insert("com.carl.study.ssm.mapper.StudentMapper.addStudent", student);
 		System.out.println("count="+count+"; student="+student);
 	}

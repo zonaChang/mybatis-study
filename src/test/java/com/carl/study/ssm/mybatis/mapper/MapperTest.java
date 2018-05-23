@@ -1,6 +1,7 @@
 package com.carl.study.ssm.mybatis.mapper;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.jdbc.SQL;
@@ -13,6 +14,7 @@ import org.junit.Test;
 
 import com.carl.study.ssm.mapper.ClassesMapper;
 import com.carl.study.ssm.mapper.StudentMapper;
+import com.carl.study.ssm.model.bean.Classes;
 
 /**
  * @desc 
@@ -48,14 +50,8 @@ public class MapperTest {
 	
 	@Test
 	public void qryClassesById() {
-		System.out.println(classesMapper.qryClassesById(1000L));
+		System.out.println(classesMapper.qryClassesById(1010L));
 	}
-	
-	@Test
-	public void qryClassesAndStuById() {
-		System.out.println(classesMapper.qryClassesAndStuById(1000L));
-	}
-	
 	
 	/**
 	 * 
@@ -67,7 +63,8 @@ public class MapperTest {
 	 */
 	@Test
 	public void one2more() {
-		
-		System.out.println(classesMapper.qryClassesOne2more(1L));
+		List<Classes> temp = classesMapper.qryClassesAndStuById(1000L);
+		System.out.println(temp);
 	}
+	
 }

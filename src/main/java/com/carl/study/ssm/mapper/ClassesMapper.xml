@@ -19,8 +19,8 @@
     <!-- resultMap end -->
     
     <select id="qryStudentByClassesId" parameterType="long" resultType="Student">
-        select t.id, t.name, t.description, t.classes_id classedId, t.sex, t.abc bak from t_student
-        where t.id = #{id}
+        select t.id, t.name, t.description, t.classes_id classesId, t.sex, t.abc bak from t_student t
+        where t.classes_id = #{id}
     </select>
     
     <!-- other statment end -->

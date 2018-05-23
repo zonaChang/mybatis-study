@@ -3,11 +3,37 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-       <settings>
+    <!-- 
+        出现相同属性名时， 属性的优先级： resource > property 既优先使用resource引用的配置文件中的值
+     -->
+    <properties resource="db.properties">
+        <property name="jdbc.username" value="root"/>
+        <property name="jdbc.password" value="root"/>
+        
+		<!-- 当属未定义时， 使用默认值； 开启默认值支持 -->
+		<property name="org.apache.ibatis.parsing.PropertyParser.enable-default-value" value="true"/>
+		
+		<!-- 定义属性名与默认值之间的分隔符， 默认为冒号":" -->
+		<property name="org.apache.ibatis.parsing.PropertyParser.default-value-separator" value="?:"/>
+    </properties>
+    
+    <settings>
         <!-- 打印查询语句 -->
         <setting name="logImpl" value="STDOUT_LOGGING" />
+        <!-- 缓存查询结果， 默认为true -->
+       <setting name="cacheEnabled" value="false"/>
+       
+       <!-- 懒加载可用， 默认为false -->
+<!--        <setting name="lazyLoadingEnabled" value="true"/> -->
+       
+       <!-- 开启数据库下划线“_”命名和Java驼峰命名的转换， user_name转换为userName -->
+       <setting name="mapUnderscoreToCamelCase" value="true"/>
+       <!-- 数据库返回空行时， 设置对象的所有属性为空， 而非返回null -->
+       <setting name="returnInstanceForEmptyRow" value="true"/>
     </settings>
 	<typeAliases>
+	   <!-- 配置Javabean的别名， 使用全限定名太麻烦， 可以定义全限定名的别名 -->
+	   <!-- 默认为Javabean的类名， 首字母大小写均可以； 如果有注解，则以注解的值为准 -->
        <package name="com/carl/study/ssm/model/bean"/>
     </typeAliases>
     
@@ -15,10 +41,12 @@
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/ssm?characterEncoding=utf-8&amp;serverTimezone=GMT" />
-				<property name="username" value="root" />
-				<property name="password" value="root" />
+				<property name="driver" value="${jdbc.driver}" />
+				<property name="url" value="${jdbc.url}" />
+				
+				<!-- jdbc.username属性如果不存在， 则用默认值root -->
+				<property name="username" value="${jdbc.username?:root}" />
+				<property name="password" value="${jdbc.password}" />
 			</dataSource>
 
 		</environment>
