@@ -10,7 +10,7 @@
             org.apache.ibatis.type.EnumOrdinalTypeHandler: 通过匹配枚举值定义的顺序， 确定枚举值
             org.apache.ibatis.type.EnumTypeHandler:通过枚举值的名字，确定枚举值
          -->
-        <result property="sex" column="sex" typeHandler="com.carl.study.ssm.handler.SexEnumHandler"/>
+        <result property="sex" column="sex" typeHandler="com.carl.study.ssm.handler.EnumFlagTypeHandler"/>
     </resultMap>
     <select id="qryStudentByName" resultMap="qryStudentByNameMap">
         select * from t_student t where t.name like "%carl%"

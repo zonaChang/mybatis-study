@@ -15,11 +15,11 @@ import com.carl.study.ssm.model.enums.base.FlagEnum;
  * @author Carl
  * @create time 2018年5月23日下午10:32:51
  */
-public class SexEnumHandler<E extends Enum<E>> extends BaseTypeHandler<FlagEnum>{
+public class EnumFlagTypeHandler<E extends Enum<E>> extends BaseTypeHandler<FlagEnum>{
 
 	private Class<FlagEnum> type; 
 	
-	public SexEnumHandler(Class<FlagEnum> type) {
+	public EnumFlagTypeHandler(Class<FlagEnum> type) {
 		if(type == null) {
 			throw new RuntimeException("type can't is null");
 		}
