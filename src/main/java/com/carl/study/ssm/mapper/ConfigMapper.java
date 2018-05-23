@@ -13,4 +13,6 @@ public interface ConfigMapper {
 
 	List<Student> qryStudentByName();
 
+	Long insertStudentByEnum(Student temp);
+
 }

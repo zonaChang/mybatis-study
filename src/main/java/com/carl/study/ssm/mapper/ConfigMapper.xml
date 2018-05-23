@@ -15,4 +15,14 @@
     <select id="qryStudentByName" resultMap="qryStudentByNameMap">
         select * from t_student t where t.name like "%carl%"
     </select>
+    
+    <insert id="insertStudentByEnum" parameterType="Student">
+        <selectKey keyColumn="id" order="AFTER" resultType="long">
+            select last_insert_id()
+        </selectKey>
+<!--          <selectKey keyProperty="id" order="AFTER" resultType="long"> -->
+<!--            SELECT LAST_INSERT_ID() -->
+<!--        </selectKey> -->
+        insert into t_student (name, sex) values(#{name}, #{sex, typeHandler=com.carl.study.ssm.handler.EnumFlagTypeHandler})
+    </insert>
 </mapper>

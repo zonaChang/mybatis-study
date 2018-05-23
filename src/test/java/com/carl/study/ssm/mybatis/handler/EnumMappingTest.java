@@ -1,4 +1,4 @@
-package com.carl.study.ssm.mybatis.config;
+package com.carl.study.ssm.mybatis.handler;
 
 import java.io.IOException;
 import java.util.List;
@@ -12,17 +12,19 @@ import org.junit.Test;
 
 import com.carl.study.ssm.mapper.ConfigMapper;
 import com.carl.study.ssm.model.bean.Student;
+import com.carl.study.ssm.model.enums.SexEnum;
 
 /**
  * @desc 
  * @author Carl
- * @create time 2018年5月23日下午8:04:30
+ * @create time 2018年5月24日上午7:27:36
  */
-public class ConfigTest {
-	
+public class EnumMappingTest {
+
 	private static SqlSessionFactory sessionFactory;
 	private static SqlSession sqlSession;
 	private static ConfigMapper configMapper;
+	
 	@BeforeClass
 	public static void beforeHandler() throws IOException {
 		sessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsReader("mybatis/sqlMapCofig.xml"));
@@ -32,18 +34,23 @@ public class ConfigTest {
 	
 	/**
 	 * 
-	 * @desc 测试参数的替换，主要配置在sqlMapConf.xml文件中
+	 * @desc 查询结果映射为枚举
 	 * @author Carl
-	 * @create time 2018年5月23日下午8:07:36
+	 * @create time 2018年5月24日上午7:30:02
 	 *
 	 */
 	@Test
-	public void paramOveried() {
+	public void qryEnum() {
 		List<Student> stu = configMapper.qryStudentByName();
-		System.out.println(stu);
-//		List<Student> stu2 = sessionFactory.openSession(true).getMapper(ConfigMapper.class).qryStudentByName();
-		List<Student> stu2 = configMapper.qryStudentByName();
-		System.out.println(stu2);
+		System.out.println(stu.get(0).getSex().ordinal());
 	}
-
+	
+	@Test
+	public void insertEnum() {
+		Student temp = new Student();
+		temp.setName("enum");
+		temp.setSex(SexEnum.MALE);
+		Long id = configMapper.insertStudentByEnum(temp);
+		System.out.println(id);
+	}
 }
